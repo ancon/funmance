@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+ <html xmlns="http://www.w3.org/1999/xhtml" >
+ <head>
+     <title>Untitled Page</title>
+     <script type="text/javascript" src="jquery.min.js"></script>
+     <script type="text/javascript">
+
+$(function() {
+$.getJSON('http://test.jsonp.io/slack.php?jsoncallback=?',
+getdata=function(json) {
+console.log(json);
+// alert('您查询到航班信息：票价： ' + json.price + ' 元，余票： ' + json.tickets + ' 张。');
+
+/*
+var html = "";
+for (var key in json.data) {
+html = html + "<img src='http://test.jsonp.io/" + json.data[key].filename + "'><br>";
+html = html + "名称:" + json.data[key].code + "<br>";
+html = html + "category:" + json.data[key].price + "<br>";
+html = html + "height:" + json.data[key].tickets + "<br>";
+html = html + "<hr>";
+}
+$('#imageList').html(html);
+*/
+});
+});
+        
+     </script>
+     </head>
+  <body>
+    <h1>aaaa</h1>
+  </body>
+ </html>
