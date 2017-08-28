@@ -35,7 +35,7 @@ function p($data, $value = 0)
  * 
  * @Author Ancon<zhongfuzhong@gmail.com>
  */
-function kang($id = 8)
+function discuz($id = 8)
 {
     $uid = intval($id);
     $uid = sprintf("%09d", $uid);
@@ -55,7 +55,7 @@ function kang($id = 8)
  * 
  * @Author Ancon<zhongfuzhong@gmail.com>
  */
-function pipei($id = 8)
+function matching($id = 8)
 {
     $uid = intval($id);
     $uid = 1000000000+$uid;
@@ -73,7 +73,7 @@ function pipei($id = 8)
  * 
  * @Author Ancon<zhongfuzhong@gmail.com>
  */
-function laoy($id = 8)
+function interpolation($id = 8)
 {
     $uid = strval($id);
     for ($i=0; $i < 9; $i++) { 
@@ -83,7 +83,8 @@ function laoy($id = 8)
     }
     $uid = substr_replace($uid, '/', 3, 0);
     $uid = substr_replace($uid, '/', 6, 0);
-    $uid = substr_replace($uid, '/', 9, 0);
+    $fileName = substr_replace($uid, '/', 9, 0);
+    return $fileName;
 }
 
 
@@ -95,7 +96,7 @@ function laoy($id = 8)
  * 
  * @Author Ancon<zhongfuzhong@gmail.com>
  */
-function anconplus($id = 8)
+function ancon_discuz($id = 8)
 {
     $uid = intval($id);
     $uid = 1000000000+$uid;
@@ -104,6 +105,7 @@ function anconplus($id = 8)
     $dir3 = substr($uid, 6, 2);
     $name = substr($uid, -2);
     $fileName = $dir1 . '/' . $dir2 . '/' . $dir3 . '/' . $name;
+    return $fileName;
 }
 
 /**
@@ -114,13 +116,14 @@ function anconplus($id = 8)
  * 
  * @Author Ancon<zhongfuzhong@gmail.com>
  */
-function kang($id = 8)
+function discuz_interpolation($id = 8)
 {
     $uid = intval($id);
     $uid = sprintf("%09d", $uid);
     $uid = substr_replace($uid, '/', 3, 0);
     $uid = substr_replace($uid, '/', 6, 0);
-    $uid = substr_replace($uid, '/', 9, 0);
+    $fileName = substr_replace($uid, '/', 9, 0);
+    return $fileName;
 }
 
 /**
@@ -131,14 +134,15 @@ function kang($id = 8)
  * 
  * @Author Ancon<zhongfuzhong@gmail.com>
  */
-function gaij($id = 8)
+function ancon_interpolation($id = 8)
 {
     $uid = intval($id);
     $uid = 1000000000+$uid;
     $uid = substr($uid,1);
     $uid = substr_replace($uid, '/', 3, 0);
     $uid = substr_replace($uid, '/', 6, 0);
-    $uid = substr_replace($uid, '/', 9, 0);
+    $fileName = substr_replace($uid, '/', 9, 0);
+    return $fileName;
 }
 
 /**
@@ -151,16 +155,19 @@ function gaij($id = 8)
  * 
  * @Author Ancon<zhongfuzhong@gmail.com>
  */
-function run_times($function, $uid)
+function run_times($function, $uid = 8)
 {
-	p('调用的函数名是：'.$function);
+    p('使用调用方式函数名：'.__FUNCTION__);
+    echo('调用的函数名是：');
+    print_r($function);
 	$start_time = microtime(true);
 	$time = 10000;
 	for($i=1;$i<=$time;$i++){
 	  $function($uid);
 	}
 	$end_time = microtime(true);
-	echo '循环'.$time.'的时间是：'.($end_time-$start_time).' s';
+    p('调用的函数返回值是：'.$function($uid));
+	p('循环'.$time.'的时间是：'.($end_time-$start_time).' s');
 }
 
 /**
@@ -175,20 +182,83 @@ function run_times($function, $uid)
  */
 function call_back_times($function, $uid)
 {
-	p('调用的函数名是：'.$function);
+    p('使用调用方式函数名：'.__FUNCTION__);
+    echo('调用的函数名是：');
+    print_r($function);
 	$start_time = microtime(true);
 	$time = 10000;
-	for($i=1;$i<=$time;$i++){
+    for($i=1;$i<=$time;$i++){
         call_user_func("$function", "$uid");
-	}
-	$end_time = microtime(true);
-	echo '循环'.$time.'的时间是：'.($end_time-$start_time).' s';
+    }
+    $end_time = microtime(true);
+    p('调用的函数返回值是：'.$function($uid));
+    p('循环'.$time.'的时间是：'.($end_time-$start_time).' s');
 }
 
-run_times('kang',9999999);
-run_times('pipe',9999999);
-run_times('laoy',9999999);
-run_times('zhyu',9999999);
-run_times('gaii',9999999);
-run_times('gaij',9999999);
-call_back_times('pipe',9999999);
+run_times('discuz',5);
+run_times('matching',5);
+run_times('interpolation',5);
+run_times('ancon_discuz',5);
+run_times('discuz_interpolation',5);
+run_times('ancon_interpolation',5);
+call_back_times('discuz',5);
+
+/**
+ * 匿名函数表达式
+ * @var [function]
+ */
+$discuz_closure = function ($id) {
+    $uid = intval($id);
+    $uid = sprintf("%09d", $uid);
+    $dir1 = substr($uid, 0, 3);
+    $dir2 = substr($uid, 3, 2);
+    $dir3 = substr($uid, 5, 2);
+    $name = substr($uid, -2);
+    $fileName = $dir1 . '/' . $dir2 . '/' . $dir3 . '/' . $name;
+    return $fileName;
+};
+
+run_times(function ($id) {
+    $uid = intval($id);
+    $uid = sprintf("%09d", $uid);
+    $dir1 = substr($uid, 0, 3);
+    $dir2 = substr($uid, 3, 2);
+    $dir3 = substr($uid, 5, 2);
+    $name = substr($uid, -2);
+    $fileName = $dir1 . '/' . $dir2 . '/' . $dir3 . '/' . $name;
+    return $fileName;
+}, 5);
+
+
+
+// function callFunc($func){
+//     $func("argv");
+// }
+
+// callFunc(function($str){
+//     p($str);
+// });
+
+// function callFunction( $func ) {
+//     $func( 'some string' );
+// }
+
+// $printStrFunc = function( $str ) {
+//     echo $str;
+// };
+// callFunction( $printStrFunc );
+
+
+
+// function callFunction( $function, $id ) {
+//     echo('调用的函数名是：');
+//     print_r($function);
+//  $start_time = microtime(true);
+//  $time = 10000;
+//  for($i=1;$i<=$time;$i++){    
+//         $function( $id );
+//     }
+//  $end_time = microtime(true);
+//     p('调用的函数返回值是：'.$function($id));
+//     p('循环'.$time.'的时间是：'.($end_time-$start_time).' s');
+// }
